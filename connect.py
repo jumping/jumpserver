@@ -484,13 +484,21 @@ class Nav(object):
         self.user_perm = {}
 
     @staticmethod
+    def print_refresh():
+        msg = """
+        \033[32m刷新成功\033[0m
+        """
+        print textwrap.dedent(msg)
+
+    @staticmethod
     def print_nav():
         """
         Print prompt
         打印提示导航
         """
-        msg = """\n\033[1;32m###    欢迎使用Jumpserver开源跳板机系统   ### \033[0m
-
+        ##msg = """\n\033[1;32m###    欢迎使用Jumpserver开源跳板机系统   ### \033[0m
+        msg = """
+        0) 输入 \033[32mR/r\033[0m 刷新显示.
         1) 输入 \033[32mID\033[0m 直接登录.
         2) 输入 \033[32m/\033[0m + \033[32mIP, 主机名 or 备注 \033[0m搜索.
         3) 输入 \033[32mP/p\033[0m 显示您有权限的主机.
@@ -500,7 +508,7 @@ class Nav(object):
         7) 输入 \033[32mU/u\033[0m 批量上传文件.
         8) 输入 \033[32mD/d\033[0m 批量下载文件.
         9) 输入 \033[32mH/h\033[0m 帮助.
-        0) 输入 \033[32mQ/q\033[0m 退出.
+        10) 输入 \033[32mQ/q\033[0m 退出.
         """
         print textwrap.dedent(msg)
 
@@ -750,6 +758,10 @@ def main():
                 continue
             except KeyboardInterrupt:
                 sys.exit(0)
+            if option in ['R', 'r']:
+                nav = Nav(login_user)
+                nav.print_refresh()
+                continue
             if option in ['P', 'p', '\n', '']:
                 nav.search()
                 continue
